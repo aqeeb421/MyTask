@@ -78,7 +78,7 @@ class SignUpFragment : Fragment() {
 
     private fun displayUsersList() {
         Log.i(TAG, "insidisplayUsersList")
-        val action = SignUpFragmentDirections.actionRegisterFragmentToLoginFragment()
+        val action = SignUpFragmentDirections.actionRegisterFragmentToUserDetailsFragment()
         NavHostFragment.findNavController(this).navigate(action)
 
     }

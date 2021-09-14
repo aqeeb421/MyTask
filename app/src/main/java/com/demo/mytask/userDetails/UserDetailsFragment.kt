@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -86,34 +88,46 @@ class UserDetailsFragment : Fragment() {
 
     }
 
+    var adapter: MyRecycleViewAdapter? = null
 
     private fun initRecyclerView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
         userDetailsViewModel.users.observe(viewLifecycleOwner, Observer {
-            val adapter = MyRecycleViewAdapter(it)
+            displayUsersList()
 
-            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
+            val helper = ItemTouchHelper(
+                object : ItemTouchHelper.SimpleCallback(
+                    0,
+                    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                ) {
+                    override fun onMove(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder
+                    ): Boolean {
+                        return false
+                    }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val task = adapter.getUser(viewHolder.adapterPosition)
-                    userDetailsViewModel.delete(task!!)
-                }
+                    override fun onSwiped(
+                        viewHolder: RecyclerView.ViewHolder,
+                        direction: Int
+                    ) {
+                        val position = viewHolder.adapterPosition
+                        val myWord = adapter?.getUser(position)
+                        Toast.makeText(
+                            requireContext(), "Deleting " +
+                                    myWord?.firstName, Toast.LENGTH_LONG
+                        ).show()
 
-            })
+                        // Delete the word
+                        userDetailsViewModel.delete(myWord!!)
+                    }
+                })
+
+            helper.attachToRecyclerView(binding.usersRecyclerView)
+
         })
-
-        displayUsersList()
     }
 
 
@@ -121,27 +135,9 @@ class UserDetailsFragment : Fragment() {
         Log.i(TAG, "Inside ...UserDetails..Fragment")
         userDetailsViewModel.users.observe(viewLifecycleOwner, Observer {
             binding.usersRecyclerView.adapter = MyRecycleViewAdapter(it)
-
+            adapter = MyRecycleViewAdapter(it)
             val adapter = MyRecycleViewAdapter(it)
 
-            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val task = adapter.getUser(viewHolder.adapterPosition)
-                    userDetailsViewModel.delete(task!!)
-                }
-
-            })
         })
 
     }
