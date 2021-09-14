@@ -79,4 +79,14 @@ dependencies {
 
     //swipe decorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
+    // - - Retrofit2
+    def retrofit_version = "2.9.0"
+    def logging_version = "4.3.1"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$logging_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_version"
+
+
 }

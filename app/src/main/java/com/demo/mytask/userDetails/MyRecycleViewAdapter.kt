@@ -5,12 +5,10 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.mytask.R
-import com.demo.mytask.WheatherActivity
+import com.demo.mytask.weather.WeatherActivity
 import com.demo.mytask.database.UserEntity
 import com.demo.mytask.databinding.ListItemBinding
 
@@ -36,7 +34,7 @@ class MyRecycleViewAdapter(private val usersList: List<UserEntity>) :
 
         holder.binding.cardView.setOnClickListener {
             Log.d("TAG", "onBindViewHolder: hello")
-            context!!.startActivity(Intent(context!!, WheatherActivity::class.java))
+            context!!.startActivity(Intent(context!!, WeatherActivity::class.java))
         }
 
     }
