@@ -83,6 +83,7 @@ class UserDetailsFragment : Fragment() {
         Log.i(TAG, "insidisplayUsersList")
         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToRegisterFragment()
         NavHostFragment.findNavController(this).navigate(action)
+
     }
 
 
